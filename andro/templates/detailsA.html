@@ -1,0 +1,79 @@
+{% extends 'baseA.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/estilo2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/style3.css' %}">
+{% endblock %}
+{% block title %}
+Andromeda | Detalles
+{% endblock %}
+{% block content %}
+<style>
+a {
+    text-decoration: none;
+}
+</style>
+<!--diseño de tasa-->
+<div class="contenedor">
+    <div class="imag">
+        <img src="{{prod.imagen.url}}" alt="Descripción de la imagen">
+    </div>
+    <div class="seccion-texto">
+        <h2 style="text-transform: uppercase;">{{prod.nombre}} | ${{prod.precio}}</h2>
+        <p>{{ prod.descripcion }}</p><br>
+        <div class="button-container">
+        {% for producto in productos %}
+            {% if producto.en_carrito and prod.id == producto.id %}
+
+                <span class="num">{{ producto.cantidad_en_carrito }}</span>
+                <a class="agregar" href="{% url 'andro:Add' prod.id %}"><span>+</span></a>
+                <br>
+                <a class="quitar" href="{% url 'andro:Sub' prod.id %}">-</a>
+
+            {% endif %}
+        {% endfor %}
+        </div>
+    
+
+        {% for producto in productos %}
+            {% if not producto.en_carrito and prod.id == producto.id%}
+                <a href="{% url 'andro:Add' prod.id %}" class="agregar">
+                    RESERVAR EN EL CARRITO <span class="material-symbols-outlined">shopping_cart</span>                    
+                </a>
+            {% endif %}
+        {% endfor %}
+        <br><br>    
+        <hr>
+        <h3>Sobre este articulo</h3>
+        <ul>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+        </ul>
+    </div>
+</div>
+<!--fin diseño de tasa-->
+<hr>
+<!--Cartas-->
+<h2 class="descripcion"> Productos relacionados </h2>
+<div class="cartas">
+    {% for producto in sample %}
+    <label class="cartasT">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br>
+        {% else %}
+        <img src="{% static 'images/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+        {% endif %}
+        <h4>{{ producto.nombre }} | ${{ producto.precio }}</h4><br>
+        <a href="{% url 'andro:prod_detalles' prod.id %}" class="detalles">Ver detalles</a>
+    </label>
+    {% endfor %}
+</div><br>
+<div class="butonFinal">
+    <a id="reservarFinalBtn" href="{% url 'andro:catalogo' %}">Regresar al catalogo</a>
+</div>
+<!--FinCartas-->
+<br><br> <br>
+{% endblock %}

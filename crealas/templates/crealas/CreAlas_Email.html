@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correo de Confirmación de Compra</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: #a7fed9;
+        /* Color sólido en lugar de gradiente */
+    }
+
+    .CreAlas {
+        margin: 20px;
+        /* Márgenes para separar del borde del cliente de correo */
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #e0f7ff;
+        /* Color de fondo */
+    }
+
+    .CreAlas header,
+    .CreAlas section,
+    .CreAlas footer {
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #66a8ba;
+        /* Borde en lugar de sombra */
+        border-radius: 5px;
+        background-color: #e0f7ff;
+        /* Color de fondo */
+    }
+
+    .CreAlas header {
+        font-size: 24px;
+        font-weight: bolder;
+    }
+
+    .CreAlas section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .CreAlas hr {
+        border: 1px solid #4b4b54;
+    }
+
+    .CreAlas table {
+        border: 1px solid #4b4b54;
+        font-size: 20px;
+        width: 100%;
+        /* Haz que la tabla ocupe el ancho completo */
+        max-width: 600px;
+        /* Establece un ancho máximo para evitar que la tabla sea demasiado ancha */
+    }
+
+    .CreAlas table * {
+        border: 1px solid #4b4b54;
+        background-color: #7dd0e7;
+        padding: 8px;
+        /* Añade un relleno a las celdas para mejorar la legibilidad */
+    }
+
+    .CreAlas th {
+        background-color: #66a8ba;
+    }
+
+    .CreAlas footer {
+        background-color: #06171c;
+        color: white;
+    }
+
+    /* Elimina elementos fijos de posición */
+    </style>
+</head>
+
+<body>
+    <div class="CreAlas">
+        <header>
+            Gracias por tu compra {{ user_name }}
+        </header>
+        <section>
+            <p>Reciba usted la información acerca de su compra recién hecha</p>
+            <hr>
+            <table>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+                {% for key, value in carrito_data.items %}
+                <tr>
+                    <td>{{ value.nombre }}</td>
+                    <td>{{ value.cantidad }}</td>
+                    <td>{{ value.precio }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+        <footer>
+            <p>Atentamente: CreAlas</p>
+            <p>{{fecha}}</p>
+        </footer>
+    </div>
+</body>
+
+</html>

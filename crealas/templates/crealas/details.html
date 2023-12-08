@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'Calas/css/style3.css' %}">
+{% endblock %}
+{% block title %}
+CreAlas | Detalles
+{% endblock %}
+{% block content %}
+<div class="contenedor">
+    <div class="bubble before"></div>
+    <div class="details">
+        <div class="seccion-texto">
+            <h2>{{prod.nombre }}</h2>
+            <p>{{ prod.descripcion }}</p>
+            <hr>
+            <div class="cart_control">
+                {% for producto in productos %}
+                {% if producto.en_carrito and prod.id == producto.id%}
+                <a class="det" href="{% url 'Calas:Add' prod.id %}"><span>+</span></a>
+                {% for producto in productos %}
+                {% if producto.en_carrito and prod.id == producto.id %}
+                <div class="amount">{{ producto.cantidad_en_carrito }}</div>
+                {% endif %}
+                {% endfor %}
+                <a class="det" href="{% url 'Calas:Sub' prod.id %}">-</a>
+                {% endif %}
+                {% endfor %}
+                {% for producto in productos %}
+                {% if not producto.en_carrito and prod.id == producto.id%}
+                <a href="{% url 'Calas:Add' prod.id %}" class="papas">
+                    <div>
+                        <button class="papas">
+                            RESERVAR EN EL CARRITO <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                    </div>
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <hr>
+            <h3>Sobre este articulo</h3>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit</li>
+            </ul>
+        </div>
+        <div class="imag">
+            <img src="{{prod.imagen.url}}" alt="Descripción de la imagen">
+            <p class="descripcion">Descripción de la imagen.</p>
+        </div>
+    </div>
+    <div class="bubble after"></div>
+</div>
+<hr>
+<div class="contenedor2">
+    <div class="card">
+        {% for producto in sample %}
+        <a class="segun" href="{% url 'Calas:prod_detalles' producto.id %}"
+            style="text-decoration: none; color: black;">
+            <h4>¿Estas interesado en tarjetas de presentación?</h4>
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br>
+            {% else %}
+            <img src="{% static 'default/porsinohay.jpg' %}" alt="{{ producto.nombre }}">
+            {% endif %}
+        </a>
+        {% endfor %}
+        <br><br><br>
+    </div>
+    <div class="bubble after"></div>
+</div>
+<!--fin diseño de tasa-->
+<br>
+<hr>
+<br>
+<!--FinCartas-->
+<br>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'Calas/css/style4.css' %}">
+{% endblock %}
+{% block title %}
+CreAlas | Carrito
+{% endblock %}
+{% block content %}
+<!--diseño de tasa-->
+<div class="contenedor">
+    <div class="imag">
+        <div class="seccion-texto">
+            <form action="{% url 'Calas:enviar_carrito' %}" method="POST">
+                {% csrf_token %}
+                <label>Direccion de entrega</label>
+                <input type="text" id="address" name="address" required></input>
+                <label>Numero de contacto 1</label>
+                <input type="text" id="telefono1" name="telefono1" pattern="[0-9]{1,8}" required></input>
+                <label>Numero de contacto 2</label>
+                <input type="text" id="telefono2" name="telefono2" pattern="[0-9]{1,8}" required></input>
+                <label>Fecha de entrega, elige entre lunes, miercoles o sabado</label>
+                <input type="date" id="fecha" name="fecha" required></input>
+                <label>Departamento</label>
+                <select id="dino-select" name="departamento">
+                    <optgroup label="Departamento">
+                        <option value="AH">Ahuachapán</option>
+                        <option value="CA">Cabañas</option>
+                        <option value="CH">Chalatenango</option>
+                        <option value="CU">Cuscatlán</option>
+                        <option value="LI">La Libertad</option>
+                        <option value="MO">Morazán</option>
+                        <option value="PA">La Paz</option>
+                        <option value="SA">Santa Ana</option>
+                        <option value="SM">San Miguel</option>
+                        <option value="SS">San Salvador</option>
+                        <option value="SV">San Vicente</option>
+                        <option value="UN">La Unión</option>
+                        <option value="US">Usulután</option>
+                    </optgroup>
+                </select>
+                <br>
+        </div>
+    </div>
+    <div class="seccion-texto">
+        <p>El precio total no incluye cargo por envios o costos adicionales,
+            estos se cargaran cuando se este en contacto con el vendedor final</p><br>
+        <hr>
+        <h4>CONFIRMACIÓN DEL PRODUCTO</h4>
+        <table>
+            <tr>
+                <th style="color:black; text-align:center">Articulo</th>
+                <th style="color:black; text-align:center">Cantidad</th>
+                <th style="color:black; text-align:center">Precio</th>
+            </tr>
+            {% for key, value in carrito.items %}
+            <tr>
+                <td>{{value.nombre}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>{{value.precio}}</td>
+            </tr>
+            {% endfor %}
+            <tr style="background-color:#8c84c4;">
+                <td rowspan="2">Total: </td>
+                <td>{{articulosc}}</td>
+                <td>${{totalc}}</td>
+            </tr>
+        </table>
+        <button type="submit" class="custom-button">Realizar pago</button>
+        </form>
+    </div>
+</div>
+<br>
+<!--fin diseño de tasa-->
+{% endblock %}

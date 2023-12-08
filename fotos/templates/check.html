@@ -1,0 +1,142 @@
+{% extends 'baseF.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'fotos/css/check.css' %}">
+{% endblock %}
+{% block title %}
+Fotos | Carrito
+{% endblock %}
+{% block content %}
+<div class="container_arriba">
+    <div class="show_details segmento1">
+        <div class="wizard">
+            <div class="step active" id="step1">
+                <h2>Paso 1</h2>{{ fecha|date:"D d M Y H:i" }}
+                <p>¡Bienvenido! Haz clic en Siguiente para continuar.</p>
+            </div>
+            <div class="step" id="step2">
+                <h2>Paso 2</h2>
+                <p>Ingresa tu información.</p>
+                <!-- Agrega campos de formulario aquí -->
+            </div>
+            <div class="step" id="step3">
+                <h2>Paso 3</h2>
+                <p>¡Listo! Instalación completada.</p>
+            </div>
+            <div id="progress-bar">
+                <div id="step1-progress">Articulos</div>
+                <div id="step2-progress">Detalles</div>
+                <div id="step3-progress">Confirmacion </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="product_collections segmento2">
+        <div class="container2">
+            <div class="step1-content">
+                {% for key, value in carrito.items %}
+                <div class="card">
+                    <div class="img-container">
+                        <img src="{{ value.img }}" alt="" class="img">
+                        <div class="botonera">
+                            <a href="{% url 'fotos:Add' value.producto_id %}" class="add">+</a>
+                            <div class="n">
+                                <p>{{ value.cantidad }}</p>
+                            </div>
+                            <a href="{% url 'fotos:Sub' value.producto_id %}" class="rm">-</a>
+                        </div>
+                    </div>
+                    <div class="text-container">
+                        <div class="titulo">
+                            <h4>{{value.nombre}}</h4>
+                        </div>
+                        <div class="description">
+                            <p>{{value.descripcion}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <button class="retro" onclick="nextStep()">Siguiente</button>
+            </div>
+            <div class="step2-content">
+                <form action="{% url 'fotos:enviar_carrito' %}" method="POST">
+                    {% csrf_token %}
+                    <p> <label>Direccion de entrega</label>
+                        <input type="text" id="address" name="address" required></input> </p>
+                    <p> <label>Numero de contacto 1</label>
+                        <input type="text" id="telefono1" name="telefono1" pattern="[0-9]{1,8}" required></input> </p>
+                    <p> <label>Numero de contacto 2</label>
+                        <input type="text" id="telefono2" name="telefono2" pattern="[0-9]{1,8}" required></input> </p>
+                    <p> <label>Fecha de entrega, elige entre lunes, miercoles o sabado</label>
+                        <input type="date" id="fecha" name="fecha" required></input> </p>
+                    <p> <label>Departamento</label>
+                        <select id="dino-select" name="departamento">
+                            <optgroup label="Departamento">
+                                <option value="">Seleccione</option>
+                                <option value="AH">Ahuachapán</option>
+                                <option value="CA">Cabañas</option>
+                                <option value="CH">Chalatenango</option>
+                                <option value="CU">Cuscatlán</option>
+                                <option value="LI">La Libertad</option>
+                                <option value="MO">Morazán</option>
+                                <option value="PA">La Paz</option>
+                                <option value="SA">Santa Ana</option>
+                                <option value="SM">San Miguel</option>
+                                <option value="SS">San Salvador</option>
+                                <option value="SV">San Vicente</option>
+                                <option value="UN">La Unión</option>
+                                <option value="US">Usulután</option>
+                            </optgroup>
+                        </select>
+                    </p>
+                    <button class="retro" onclick="prevStep()" style="width: 32% !important;  padding-left: 2%;">Anterior</button>
+                    <button type="button" class="retro" onclick="nextStep()" style="width: 32% !important;  padding-left: 2%;">Siguiente</button>
+            </div>
+            <div class="step3-content">
+                <div class="ticket">
+                    <div class="header">
+                        <h2>Andromeda Photos</h2>
+                        <p>Detalles de compra | {{ fecha|date:"D d M Y H:i" }}</p>
+                    </div>
+                    <div class="details">
+                        {% for key, value in carrito.items %}
+                        <div class="item">
+                            <span>{{ value.nombre}}</span>
+                            <span>${{ value.precio}}</span>
+                        </div>
+                        {% endfor %}
+                        <span></span>
+                        <div class="item">
+                            <span>Total</span>
+                            <span>${{totalf}}</span>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="address">
+                        <p>El precio total no incluye cargo por envios o costos adicionales,
+                            estos se cargaran cuando se este en contacto con el vendedor final
+                        </p>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="total">
+                        <span>Total:</span>
+                        <span>${{ totalf }}</span>
+                    </div>
+                </div>
+                <button class="retro" onclick="prevStep()">Anterior</button>
+                <button class="retro" type="submit">Guardar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="pagination_buttons segmento3">
+    </div>
+    <br>
+    {% block js %}
+    {{ block.super }}
+    <script src="{% static 'fotos/js/step.js' %}"></script>
+    {% endblock %}
+    {% endblock %}

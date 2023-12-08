@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correo de Confirmación de Compra</title>
+    <style>
+    body {
+        font-family: sans-serif;
+        color: white;
+        background-size: cover;
+        background-attachment: fixed;
+        padding: 10px;
+        margin: 0;
+    }
+
+    header,
+    section,
+    footer {
+        background-color: #070a1d;
+        box-shadow: #2a0552 0px 0px 15px 0px;
+        backdrop-filter: blur(5px);
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    header {
+        font-size: 30px;
+        font-weight: bolder;
+        color: white;
+    }
+
+    hr {
+        border: 2px solid #2a0552;
+        color: white;
+    }
+
+    table {
+        border: #2a0552 solid 2px;
+        font-size: 20px;
+        width: 100%;
+        margin-bottom: 20px;
+        color: white;
+    }
+
+    table * {
+        box-shadow: #2a0552 0px 0px 15px 0px;
+        background-color: #12215c;
+        margin: 0px;
+        padding: 5px;
+        color: white;
+    }
+
+    th {
+        background: linear-gradient(70deg, #070a1d, #12215c);
+        color: white;
+    }
+
+    .bg_circle_decorators {
+        background: white;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        position: fixed;
+        z-index: -1;
+        left: 0px;
+        top: 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        Gracias por tu compra {{ user_name }}
+    </header>
+    <section>
+        <p>Reciba usted la información acerca de su compra recién hecha</p>
+        <hr>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+            </tr>
+            {% for key, value in carrito_data.items %}
+            <tr>
+                <td>{{ value.nombre }}</td>
+                <td>{{ value.cantidad }}</td>
+                <td>{{ value.precio }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <footer>
+        <p>Atentamente: Andromeda Studios</p>
+        <p>{{fecha}}</p>
+    </footer>
+    <div class="bubbles">
+        <div class="bg_circle_decorators" style="transform: translate(50px,50px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(150px,150px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(50px,250px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(200px,400px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(150px,450px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(25px,600px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(225px,625px);"></div>
+        <div class="bg_circle_decorators" style="transform: translate(100px,750px);"></div>
+    </div>
+</body>
+
+</html>

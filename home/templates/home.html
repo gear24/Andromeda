@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Andromeda Studios Services</title>
+    <title>{% block title %}Andromeda Studios{% endblock %}</title>
+    <link rel="icon" href="{% static 'home/img/saturn2.svg' %}" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Pagina principal</title>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+    Swal.fire({
+        icon: '{{ message.tags }}',
+        title: 'Felicidades',
+        text: '{{ message }}',
+        showConfirmButton: false,
+        timer: 1500
+    })
+    </script>
+    {% endfor %}
+    {% endif %}
+    <header>
+        <div class="background1"></div>
+        <div class="container__menu">
+            <div class="logo">
+                <img src="{% static 'home/img/saturn2.svg' %}">
+            </div>
+            <div class="menu">
+                <i class="fas fa-bars" id="btn_menu"></i>
+                <div id="back_menu"></div>
+                <nav id="nav">
+                    <img src="{% static 'home/img/saturn2.svg' %}" alt="">
+                    <ul>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Bienvenido {{ user.username }} <br> Cerrar sesión</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login:registro' %}">Crear Cuenta</a></li>
+                        <li><a href="{% url 'login' %}" style="text-decoration: none">Ingresar</a></li>
+                        {% endif %}
+                        <li><a href="#" id="selected">Nuestros servicios</a></li>
+                        <li><a href="#">Conoce más de nosotros</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="background">
+    </div>
+    <div class="container__cover">
+        <div class="cover">
+            <div class="text">
+                <h1>Nuestros servicios</h1>
+                <p>Te ofrecemos 3 diferentes opciones, las cuales puedes elegir según tu conveniencia, puedes seleccionar entre una variedad de articulos.
+                    Como: tazas con diseños a tu elección, personalizar tus propios banners o aprovechar nuestras sesiones de fotografía profesional.</p>
+            </div>
+        </div>
+    </div>
+    <section class="products">
+        <div class="all-products">
+            <div class="product">
+                <img src="{% static 'home/img/AOS.jpg' %}">
+                <div class="product-info">
+                    <h4 class="product-title">Andrómeda Studio
+                    </h4>
+                    <a class="product-btn" href="{% url 'andro:home' %}">Ver Más</a>
+                </div>
+            </div>
+            <div class="product_black">
+                <img src="{% static 'home/img/photos-studio.jpg' %}">
+                <div class="product-info">
+                    <h4 class="product-title">Andrómeda Studio-Fotografía
+                    </h4>
+                    <a class="product-btn" href="{% url 'fotos:home' %}" style="background-color: white; color:black">Ver Más</a>
+                </div>
+            </div>
+            <div class="product">
+                <img src="{% static 'home/img/crealas.jpg' %}">
+                <div class="product-info">
+                    <h4 class="product-title">CreAlas
+                    </h4>
+                    <a class="product-btn" href="{% url 'Calas:home' %}">Ver Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="background">
+    </div>
+    <div class="container__cover">
+        <div class="cover">
+            <div class="text">
+                <h1>Nuestros servicios</h1>
+                <p>Somos un innovador emprendimiento que no solo fabrica y diseña tus
+                    ideas, sino que las lleva a ota galaxya. Nosotros no solo creamos,
+                    sino que también plasmamos y capturamos los momentos más importantes
+                    de tu vida, como si fueran estrellas brillando en el espacio infinito
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container__cover">
+        <div class="cover">
+            <div class="text">
+                <h1>¡BIENVENIDOS A UN VIAJE CÓSMICO DE INNOVACIÓN Y CREATIVIDAD!</h1>
+            </div>
+        </div>
+    </div>
+    <br>
+    <footer>
+        <div class="footer-content">
+            <h3>Descubre quienes somos</h3>
+            <p>En nuestras redes sociales, encontrarás información
+                detallada sobre los diversos productos que ofrecemos y
+                podrás mantener una comunicación mas fluida con nosotros.</p>
+            <ul class="socials">
+                <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="{% static 'home/js/nebula.js' %}"></script>
+    <script src="{% static 'home/js/stars.js' %}"></script>
+    <script src="{% static 'home/js/index.js' %}"></script>
+</body>
+
+</html>

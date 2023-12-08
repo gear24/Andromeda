@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Página de Inicio - Mi Sitio
+{% endblock %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<script>
+Swal.fire({
+    icon: '{{ message.tags }}',
+    title: 'Felicidades',
+    text: '{{ message }}',
+    showConfirmButton: false,
+    timer: 1500
+})
+</script>
+{% endfor %}
+{% endif %}
+<!--Cartas-->
+<br>
+<div class="fondo">
+    <div class="carousel">
+        <div class="cartas carrusel-item">
+            <label class="cartasTres textoCarta">
+                <br>
+                <h4><b>TAZAS</b></h4>
+                <h4>Tazas Magicas Y Personalizadas Como A Ti Te Gusten ....</h4>
+            </label>
+            <label class="cartasTres show">
+                <img src="{% static 'Calas/img/menu2.png' %}"><br><br>
+            </label>
+            <label class="cartasTres hidde">
+                <img src="{% static 'Calas/img/menu3.jpg' %}"><br><br>
+            </label>
+        </div>
+        <div class="cartas oculto carrusel-item">
+            <label class="cartasTres textoCarta">
+                <br>
+                <h4><b>Camisas</b></h4>
+                <h4>Camisas Magicas Y Personalizadas Como A Ti Te Gusten ....</h4>
+            </label>
+            <label class="cartasTres show">
+                <img src="{% static 'Calas/img/menu3.jpg' %}"><br><br><br><br>
+            </label>
+            <label class="cartasTres hidde">
+                <img src="{% static 'Calas/img/menu2.png' %}"><br><br><br><br>
+            </label>
+        </div>
+        <div class="cartas oculto carrusel-item">
+            <label class="cartasTres textoCarta">
+                <br>
+                <h4><b>Tercero</b></h4>
+                <h4>Tercero Magicas Y Personalizadas Como A Ti Te Gusten ....</h4>
+            </label>
+            <label class="cartasTres show">
+                <img src="{% static 'Calas/img/menu3.jpg' %}"><br><br><br><br>
+            </label>
+            <label class="cartasTres hidde">
+                <img src="{% static 'Calas/img/menu3.jpg' %}"><br><br><br><br>
+            </label>
+        </div>
+        <div class="numeros">
+            <ul>
+                <li onclick="mostrarContenido(1)">1</li>
+                <li onclick="mostrarContenido(2)">2</li>
+                <li onclick="mostrarContenido(3)">3</li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <div class="textoInformacion">
+        <h3>Descripción</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a href="{% url 'Calas:catalog' %}" class="red">Catálogo</a>
+    </div>
+    <hr>
+    <br><br>
+    <div class="card">
+        {% for producto in sample %}
+        <a class="segun" href="{% url 'Calas:prod_detalles' producto.id %}">
+            <h4>{{ producto.nombre }} | ${{ producto.precio }}</h4>
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br><br>
+            {% else %}
+            <img src="{% static 'default/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+            {% endif %}
+        </a>
+        {% endfor %}
+        <br><br><br>
+    </div>
+</div>
+<br>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.carrusel-item');
+        const slideIndicators = document.querySelectorAll('.carousel_slide_num');
+
+        slides.forEach(slide => slide.classList.add('oculto'));
+        slideIndicators.forEach(indicator => indicator.classList.remove('lit'));
+
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides[currentSlide].classList.remove('oculto');
+        slideIndicators[currentSlide].classList.add('lit');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+    setInterval(nextSlide, 2000);
+
+    document.querySelectorAll('.carousel_slide_num').forEach((indicator, index) => {
+        indicator.addEventListener('click', () => showSlide(index));
+    });
+});
+</script>
+{% endblock %}

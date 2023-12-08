@@ -1,0 +1,57 @@
+{% extends 'baseF.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'fotos/css/catalog.css' %}">
+{% endblock %}
+
+{% block title %}
+    Fotos | Catálogo
+{% endblock %}
+
+{% block content %}
+    <div class="container_arriba">
+        <div class="show_details segmento1">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar por categoría..." list="categorySuggestions">
+                <datalist id="categorySuggestions">
+                    {% for producto in productos %}
+                        <option value="{{ producto.categoria }}">
+                    {% endfor %}
+                </datalist>
+            </div>
+        </div>
+        <br />
+        <div class="product_collections segmento2">
+            <div class="container2">
+                {% for producto in productos %}
+                    <a href="{% url 'fotos:prod_detalles' producto.id %}" class="product_card" data-category="{{ producto.categoria }}" style="visibility: visible;">
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br>
+                        {% else %}
+                            <img src="{% static 'default/images/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+                        {% endif %}
+                        <p class="product_name">{{ producto.nombre }}| ${{ producto.precio }}</p>
+                        <p class="product_slide_description">{{ producto.descripcion }}</p>
+                        {% comment %} {% if carrito and carrito|length %}
+                            {% for key, value in carrito.items %}
+                                {% if value.producto_id == producto.id %}
+                                    <p>En carrito: {{ value.cantidad }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %} {% endcomment %}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div class="pagination_buttons segmento3">
+        </div>
+        {% block js %}
+            {{ block.super }}
+            <script src="{% static 'fotos/js/cartas.js' %}"></script>
+            <script src="{% static 'fotos/js/min.js' %}"></script>
+        {% endblock %}
+    </div>
+{% endblock %}

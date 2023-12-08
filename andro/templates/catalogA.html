@@ -1,0 +1,65 @@
+{% extends 'baseA.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/estilo2.css' %}">
+{% endblock %}
+{% block title %}
+Andromeda | Catalogo
+{% endblock %}
+{% block content %}
+<style>
+a {
+    text-decoration: none;
+}
+</style>
+<!--Cartas-->
+<!-- Agrega botones o enlaces para las categorías -->
+<div class="filtro">
+    <label for="categorias">Buscar una categoría:</label>
+    <input list="categorias" id="categoriaInput" name="categoria" placeholder="Buscar categoria">
+    <datalist id="categorias">
+        {% for categoria in categorias %}
+        <option value="{{ categoria.categoria }}">
+            {% endfor %}
+    </datalist>
+    <button id="buscarBtn">BUSCAR</button>
+</div>
+<hr>
+<div id="cartasContainer" class="cartas">
+    {% for producto in productos %}
+    <label class="cartasTres {{ producto.categoria }}">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br>
+        {% else %}
+        <img src="{% static 'images/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+        {% endif %}
+        <div class="fon">
+            <h4>{{ producto.nombre }} | ${{ producto.precio }}</h4>
+            <br>
+            <div class="contador">
+                {% if producto.en_carrito %}
+                <a href="{% url 'andro:Sub' producto.id %}" class="menos">-</a>
+                <span>{{ producto.cantidad_en_carrito }}</span>
+                <a href="{% url 'andro:Add' producto.id %}" class="mas">+</a>
+                {% else %}
+                <a href="{% url 'andro:Add' producto.id %}" class="agregar">Agregar al carrito</a>
+                {% endif %}
+            </div>
+            <br><br>
+            <p>
+                <a href="{% url 'andro:prod_detalles' producto.id %}" class="detalles">Ver detalles</a>
+            </p>
+        </div>
+    </label>
+    {% endfor %}
+</div><br><br>
+<div class="paginacion">
+    <a href="#">&laquo;</a>
+    <a href="#">1</a>
+    <a href="#" class="activo">2</a>
+    <a href="#">3</a>
+    <a href="#">&raquo;</a>
+</div>
+<!--Fin Cards-->
+<script src="{% static 'andro/js/cartas.js' %}"></script>
+{% endblock %}

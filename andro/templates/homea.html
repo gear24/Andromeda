@@ -1,0 +1,88 @@
+{% extends 'baseA.html' %}{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/style1.css' %}">
+{% endblock %}
+{% block title %}
+Andromeda Studios
+{% endblock %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+    icon: '{{ message.tags }}',
+    title: 'Felicidades',
+    text: '{{ message }}',
+    showConfirmButton: false,
+    timer: 1500
+})
+</script>
+{% endfor %}
+{% endif %}
+<!--Texto e imagen-->
+<div class="text">
+    <div class="fondoText">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur.<br><br> Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+</div>
+<!--FinTexto e imagen-->
+<!--Carrousel-->
+<div class="container">
+    <input type="radio" name="slider" id="item-1" class="slider" checked>
+    <input type="radio" name="slider" id="item-2" class="slider">
+    <input type="radio" name="slider" id="item-3" class="slider">
+    
+    
+    <div class="cards">
+        {% for producto in sample %}
+        <label class="card" for="item-{{ forloop.counter }}" id="song-{{ forloop.counter }}">
+            {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="418" height="418" />
+                {% else %}
+                    <img src="{% static 'fotos/images/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+            {% endif %}
+        </label>
+        {% endfor %}
+    </div>
+</div>
+<!--Fin carrousel -->
+<div class="cotiza">
+    <h3>TE CREAMOS TU MENU A TU ESTILO</h3>
+    <a href="{% url 'andro:catalogo' %}"><button>COTIZAR AHORA</button></a>
+</div>
+<br><br>
+<!--Cartas-->
+<div class="fonCar">
+    <div class="cartas">
+        <label class="cartasTres">
+            <h4>¿Estas interesado en tarjetas de presentación?</h4>
+            <img src="{% static 'andro/images/menu.jpg' %}"><br><br>
+            <button><a href="#">Ver mas</a></button>
+        </label>
+        <label class="cartasTres">
+            <h4>¿Estas interesado en tarjetas de presentación?</h4>
+            <img src="{% static 'andro/images/menu2.png' %}"><br><br>
+            <button><a href="#">Ver mas</a></button>
+        </label>
+        <label class="cartasTres">
+            <h4>¿Estas interesado en tarjetas de presentación?</h4>
+            <img src="{% static 'andro/images/menu3.jpg' %}"><br><br>
+            <button><a href="#">Ver mas</a></button>
+        </label>
+    </div><br>
+</div>
+<!--FinCartas-->
+{% block js %}
+{{ block.super }}
+<script src="{% static 'andro/js/pag1.js' %}"></script>
+{% endblock %}
+{% endblock %}

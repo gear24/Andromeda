@@ -1,0 +1,83 @@
+{% extends 'baseA.html' %}
+{% load static %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/style4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'andro/css/style1.css' %}">
+{% endblock %}
+{% block title %}
+Andromeda | Facturacion
+{% endblock %}
+{% block content %}
+<!--Navbar-->
+<div class="navb">
+    <h1>REALIZAR COMPRA</h1>
+</div>
+<!--Navbar-->
+<!--diseño de tasa-->
+<div class="contenedor">
+    <div class="imag">
+        <div class="seccion-texto">
+            <form action="{% url 'andro:enviar_carrito' %}" method="POST">
+                {% csrf_token %}
+                <label>Direccion de entrega</label>
+                <input type="text" id="address" name="address" required></input>
+                <label>Numero de contacto 1</label>
+                <input type="text" id="telefono1" name="telefono1" pattern="[0-9]{1,8}" required></input>
+                <label>Numero de contacto 2</label>
+                <input type="text" id="telefono2" name="telefono2" pattern="[0-9]{1,8}" required></input>
+                <label>Fecha de entrega, elige entre lunes, miercoles o sabado</label>
+                <input type="date" id="fecha" name="fecha" required></input>
+                <label>Departamento</label>
+                <select id="dino-select" name="departamento">
+                    <optgroup label="Departamento">
+                        <option value="AH">Ahuachapán</option>
+                        <option value="CA">Cabañas</option>
+                        <option value="CH">Chalatenango</option>
+                        <option value="CU">Cuscatlán</option>
+                        <option value="LI">La Libertad</option>
+                        <option value="MO">Morazán</option>
+                        <option value="PA">La Paz</option>
+                        <option value="SA">Santa Ana</option>
+                        <option value="SM">San Miguel</option>
+                        <option value="SS">San Salvador</option>
+                        <option value="SV">San Vicente</option>
+                        <option value="UN">La Unión</option>
+                        <option value="US">Usulután</option>
+                    </optgroup>
+                </select>
+                <br>
+                <br>
+                <hr>
+        </div>
+    </div>
+    <div class="seccion-texto">
+        <h4>Productos:</h4>
+        <table class="table align-middle mb-0 bg-white">
+            <tr>
+                <th class="text-center">Articulo</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Precio</th>
+            </tr>
+            {% for key, value in carrito.items %}
+            <tr>
+                <td class="text-center">{{value.nombre}}</td>
+                <td class="text-center">{{value.cantidad}}</td>
+                <td class="text-center">{{value.precio}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+        </p><br>
+        <hr>
+        <h4>CONFIRMACIÓN DEL PRODUCTO</h4>
+        <p>Productos: {{ articulosa }}</p>
+        <p>Total: ${{totala}}</p>
+        <div>
+            <button type="submit" class="custom-button">Realizar pago</button>
+        </div>
+        </form>
+    </div>
+</div>
+<!--fin diseño de tasa-->
+{% endblock %}

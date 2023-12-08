@@ -1,0 +1,72 @@
+{% extends 'baseF.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'fotos/css/details.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fotos/css/details2.css' %}">
+{% endblock %}
+
+{% block title %}
+    Página de Inicio - Mi Sitio
+{% endblock %}
+
+{% block content %}
+    <div class="container_arriba">
+        <div class="show_details segmento1">
+        </div>
+        <br />
+        <div class="segmento2">
+            <div class="container2">
+                <div class="product_details">
+                    <div class="left_details">
+                        <p class="product_title">{{prod.nombre }}</p>
+                        <img src="{{prod.imagen.url}}" alt="">
+                        <div class="interactables">
+                            {% if prod.en_carrito %}
+                                <div class="quantity_box">
+                                    <a class="minus" href="{% url 'fotos:Add' prod.id %}"><span>+</span></a>
+                                    <div class="amount">{{ prod.cantidad_en_carrito }}</div>
+                                    <a class="plus" href="{% url 'fotos:Sub' prod.id %}">-</a>
+                                </div>
+                            {% else %}
+                                <a href="{% url 'fotos:Add' prod.id %}" class="add_to_cart">
+                                    <div>
+                                        Add to cart<span class="material-symbols-outlined">shopping_cart</span>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="right_details">
+                        <br>
+                        <div class="details_specifications">{{prod.descripcion}}</div>
+                        <div class="properties">
+                            <div class="property">
+                                <div class="name"> Unit Price:</div>
+                                <div class="value">${{prod.precio}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="segmento3">
+            <div class="title">Puede que te gusten:</div>
+            <!-- Recomendations Examples -->
+            {% for producto in sample %}
+                <a class="product_card" data-category="categoria1" style="visibility: visible;" 
+                href="{% url 'fotos:prod_detalles' producto.id %}">
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}"><br>
+                    {% else %}
+                        <img src="{% static 'fotos/images/porsinohay.jpg' %}" alt="{{ producto.nombre }}"><br>
+                    {% endif %}
+                    <p class="product_name">{{ producto.nombre }} | ${{ producto.precio }}</p>
+                    <p class="product_slide_description">{{ producto.descripcion }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
